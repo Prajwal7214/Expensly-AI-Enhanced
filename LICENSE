@@ -1,0 +1,280 @@
+# Expensly - Smart Budget Tracker
+
+A full-stack personal finance management application built with vanilla JavaScript, HTML5, CSS3 (frontend) and Node.js, Express, MongoDB (backend).
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
+
+## 🌟 Features
+
+### 🔐 Authentication System
+- Secure user registration and login
+- JWT-based authentication
+- Password encryption with bcryptjs
+- Session management
+- Demo account for testing
+
+### 💰 Financial Management
+- Add and track income transactions
+- Record expense transactions
+- Categorize transactions (Food, Rent, Travel, etc.)
+- Real-time balance calculation
+- Transaction history with search and filtering
+- Delete transactions with confirmation
+
+### 📊 Analytics & Visualizations
+- Financial overview dashboard
+- Interactive pie chart for expense categories
+- Line chart for monthly spending trends
+- Real-time data updates using Chart.js
+- Visual budget progress indicators
+
+### 🎯 Budget Management
+- Set monthly budget limits by category
+- Visual progress bars showing budget utilization
+- Smart budget alerts and warnings
+- Overspending notifications
+- Track budget vs. actual spending
+
+### 💡 Savings Goals
+- Create and track multiple savings goals
+- Visual progress indicators with percentages
+- Goal deadlines and target amounts
+- Update progress functionality
+- Circular progress visualization
+
+### 🎨 Modern UI/UX
+- Clean, responsive design
+- Dark mode toggle with persistent preference
+- Mobile-friendly interface
+- Smooth animations and transitions
+- Toast notifications for user feedback
+- Accessible design with proper contrast
+
+## 🛠️ Technologies Used
+
+### Frontend
+- **HTML5** - Semantic markup
+- **CSS3** - Custom styles with CSS variables for theming
+- **JavaScript (ES6+)** - Client-side logic and API integration
+- **Chart.js** - Data visualization
+- **Font Awesome** - Icons
+
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js 5.x** - Web framework
+- **MongoDB** - Database
+- **Mongoose** - ODM for MongoDB
+- **JWT** - Token-based authentication
+- **bcryptjs** - Password hashing
+- **dotenv** - Environment configuration
+- **CORS** - Cross-origin resource sharing
+
+### Development Tools
+- **Nodemon** - Auto-restart during development
+- **Live Server** - Frontend development server
+
+## 📁 Project Structure
+
+```
+expensly/
+├── backend/
+│   ├── models/
+│   │   ├── User.js           # User schema
+│   │   ├── Transaction.js    # Transaction schema
+│   │   ├── Budget.js         # Budget schema
+│   │   └── SavingsGoal.js    # Savings goal schema
+│   ├── routes/
+│   │   ├── auth.js           # Authentication routes
+│   │   ├── transactions.js   # Transaction CRUD routes
+│   │   ├── budgets.js        # Budget management routes
+│   │   └── savings.js        # Savings goal routes
+│   ├── middleware/
+│   │   └── auth.js           # JWT authentication middleware
+│   └── server.js             # Express server setup
+├── frontend/
+│   ├── index.html            # Main HTML structure
+│   ├── style.css             # Styles and responsive design
+│   └── app.js                # Client-side JavaScript
+├── .env                      # Environment variables
+├── package.json              # Dependencies and scripts
+└── README.md                 # Project documentation
+```
+
+## 🚀 Setup Instructions
+
+### Prerequisites
+- Node.js (v16 or higher)
+- MongoDB (local installation or MongoDB Atlas account)
+- Modern web browser
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/expensly-budget-tracker.git
+   cd expensly-budget-tracker
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/expensly
+   # OR for MongoDB Atlas:
+   # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expensly?retryWrites=true&w=majority
+   
+   JWT_SECRET=your-secret-key-change-this-in-production
+   PORT=5000
+   ```
+
+4. **Start MongoDB** (if using local installation)
+   ```bash
+   mongod
+   ```
+
+5. **Run the application**
+   
+   **Development mode** (with auto-restart):
+   ```bash
+   npm run dev
+   ```
+   
+   **Production mode**:
+   ```bash
+   npm start
+   ```
+
+6. **Access the application**
+   - Frontend: Open `frontend/index.html` in your browser
+   - Or use a local server: `npx serve frontend`
+   - API: `http://localhost:5000`
+
+## 🔑 Demo Account
+
+For testing purposes, use the demo account:
+- **Email**: `demo@expensly.com`
+- **Password**: `demo123`
+
+## 📡 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login user
+
+### Transactions
+- `GET /api/transactions` - Get all user transactions
+- `POST /api/transactions` - Create new transaction
+- `DELETE /api/transactions/:id` - Delete transaction
+
+### Budgets
+- `GET /api/budgets` - Get all user budgets
+- `POST /api/budgets` - Create/update budget
+- `DELETE /api/budgets/:id` - Delete budget
+
+### Savings Goals
+- `GET /api/savings` - Get all user savings goals
+- `POST /api/savings` - Create new savings goal
+- `PUT /api/savings/:id` - Update savings goal
+- `DELETE /api/savings/:id` - Delete savings goal
+
+## 🎯 Key Features in Detail
+
+### Dashboard
+- Financial overview cards (Income, Expenses, Balance)
+- Interactive pie chart showing expense breakdown by category
+- Monthly trend line chart comparing income vs expenses
+- Recent transactions list with latest 5 entries
+
+### Transaction Management
+- Add income with categories (Job, Freelance, Investment, Other)
+- Add expenses with categories (Food, Rent, Travel, Entertainment, Utilities, Other)
+- View all transactions with filtering by category and type
+- Delete transactions with confirmation dialog
+
+### Budget System
+- Set monthly budget limits per category
+- Visual progress bars with color coding (green → yellow → red)
+- Budget utilization percentages
+- Automatic alerts when approaching or exceeding limits
+
+### Savings Goals
+- Create goals with target amounts and deadlines
+- Circular progress indicators
+- Update progress functionality
+- Track multiple goals simultaneously
+- Visual deadline reminders
+
+### Dark Mode
+- Toggle between light and dark themes
+- Persistent theme selection stored in localStorage
+- Automatic chart color updates
+- Smooth theme transitions
+
+## 🌐 Browser Compatibility
+
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+
+
+## 💾 Data Storage
+
+The application uses MongoDB for persistent data storage:
+- **Users collection** - User accounts with encrypted passwords
+- **Transactions collection** - All income and expense records
+- **Budgets collection** - Budget settings per category
+- **Savings Goals collection** - User savings goals and progress
+
+## 🔒 Security Features
+
+- Password hashing with bcryptjs
+- JWT token-based authentication
+- Protected API routes with middleware
+- Secure HTTP headers with CORS
+- Input validation and sanitization
+
+## 📱 Responsive Design
+
+- Mobile-first design approach
+- Breakpoints at 768px and 480px
+- Touch-friendly interface elements
+- Adaptive layouts for all screen sizes
+
+## 🚧 Future Enhancements
+
+- [ ] Export data to CSV/PDF
+- [ ] Recurring transactions
+- [ ] Multi-currency support
+- [ ] Budget recommendations using AI
+- [ ] Email notifications
+- [ ] Social features (family budgets)
+- [ ] Bank account integration
+- [ ] PWA features for offline access
+- [ ] Advanced analytics and reports
+
+## 🤝 Contributing
+
+Contributions are welcome! For production use, consider:
+- Implementing comprehensive error handling
+- Adding automated testing (Jest, Mocha)
+- Implementing data backup/restore
+- Adding rate limiting and security hardening
+- Improving accessibility (WCAG compliance)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👤 Author
+
+- LinkedIn: [www.linkedin.com/in/prajwal1320](https://www.linkedin.com/in/prajwal1320)
+- GitHub: [prajwal1320](https://github.com/prajwal1320)
+
+
+**Built with vanilla JavaScript, HTML5, CSS3, Node.js, Express, and MongoDB**

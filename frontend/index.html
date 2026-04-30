@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expensly | Smart Budget Tracker & AI Forecaster</title>
+    <meta name="description" content="Master your finances with Expensly. Track expenses, set budgets, and forecast your financial future with AI.">
+    <meta name="keywords" content="budget tracker, expense forecaster, personal finance, money management, AI finance">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- FIX: [Loading Spinner for Cold Starts] -->
+    <div id="initial-loader" class="loader-overlay">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p>Initializing Expensly...</p>
+        </div>
+    </div>
+    <!-- Landing Page -->
+    <div id="landing-page" class="landing-container">
+        <div class="landing-content">
+            <div class="landing-hero">
+                <div class="logo-container">
+
+                    <h1 class="logo-text">Expensly</h1>
+                </div>
+                <h2 class="hero-title">Master your money with <span class="highlight">Expensly AI</span></h2>
+                <p class="hero-subtitle">The next-generation finance platform. Track, budget, and predict your financial future with high-precision AI forecasting.</p>
+            </div>
+
+            <div class="auth-forms">
+                <!-- Login Form -->
+                <div id="login-form" class="auth-form active">
+                    <div class="auth-card">
+                        <div class="auth-card-header">
+                            <h3>Welcome Back</h3>
+                        </div>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label class="form-label">Email address</label>
+                                <input type="email" class="form-input" id="loginEmail" placeholder="name@company.com" value="demo@budget.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" value="demo123" required>
+                                    <button type="button" class="password-toggle" id="loginPasswordToggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Sign In to Dashboard</button>
+                        </form>
+                        <div class="auth-footer">
+                            <p>New to Expensly? <a href="#" id="show-signup" class="auth-link">Create Account</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signup-form" class="auth-form">
+                    <div class="auth-card">
+                        <div class="auth-card-header">
+                            <h3>Join Expensly</h3>
+                        </div>
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" id="signupName" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email address</label>
+                                <input type="email" class="form-input" id="signupEmail" placeholder="name@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" class="form-input" id="signupPassword" placeholder="Create a password" required>
+                                    <button type="button" class="password-toggle" id="signupPasswordToggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div id="password-rules" class="password-rules">
+                                    <div class="password-rule" id="rule-length"><i class="fas fa-circle rule-icon"></i> 8+ chars</div>
+                                    <div class="password-rule" id="rule-uppercase"><i class="fas fa-circle rule-icon"></i> Uppercase</div>
+                                    <div class="password-rule" id="rule-lowercase"><i class="fas fa-circle rule-icon"></i> Lowercase</div>
+                                    <div class="password-rule" id="rule-number"><i class="fas fa-circle rule-icon"></i> Number</div>
+                                    <div class="password-rule" id="rule-special"><i class="fas fa-circle rule-icon"></i> Special</div>
+                                    <div class="password-rule" id="rule-spaces"><i class="fas fa-circle rule-icon"></i> No spaces</div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full" id="signupButton" disabled>Get Started</button>
+                        </form>
+                        <div class="auth-footer">
+                            <p>Already a member? <a href="#" id="show-login" class="auth-link">Sign In</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button id="menu-toggle" class="btn-icon mobile-only" title="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo-container-small">
+
+                    <span class="logo-text-small">Expensly</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="dark-mode-toggle" class="btn-icon" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile-header" id="user-profile-header">
+                    <img src="" alt="Profile" class="user-avatar-small" id="user-avatar-small">
+                    <span class="user-name" id="user-name">Demo User</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <button id="sidebar-close" class="btn-icon mobile-only" style="margin-bottom: var(--spacing-lg);" title="Close menu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-section="dashboard">
+                        <i class="fas fa-grid-2"></i>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="transactions">
+                        <i class="fas fa-list-ul"></i>
+                        <span>Transactions</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="budget">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Budgets</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="savings">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Goals</span>
+                    </a>
+                    <a href="#" class="nav-item nav-item-ai" data-section="ai-forecast">
+                        <i class="fas fa-brain"></i>
+                        <span>AI Forecast</span>
+                    </a>
+                    <div class="sidebar-divider"></div>
+                    <a href="#" class="nav-item" data-section="income">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Income</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="expenses">
+                        <i class="fas fa-minus-circle"></i>
+                        <span>Add Expense</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Account</span>
+                    </a>
+                    <div class="sidebar-divider"></div>
+                    <a href="#" class="nav-item nav-item-logout" id="logout-btn-sidebar">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="content-section active">
+                    <div class="section-header">
+                        <div>
+                            <h2>Overview</h2>
+                            <p class="section-description">Your real-time financial performance</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card income-card">
+                            <div class="stat-header">
+                                <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
+                                <h3>Total Income</h3>
+                            </div>
+                            <p class="stat-value" id="total-income">₹0</p>
+                            <div class="stat-footer">Current Month</div>
+                        </div>
+
+                        <div class="stat-card expense-card">
+                            <div class="stat-header">
+                                <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
+                                <h3>Total Expenses</h3>
+                            </div>
+                            <p class="stat-value" id="total-expenses">₹0</p>
+                            <div class="stat-footer">Current Month</div>
+                        </div>
+
+                        <div class="stat-card balance-card">
+                            <div class="stat-header">
+                                <div class="stat-icon"><i class="fas fa-wallet"></i></div>
+                                <h3>Net Balance</h3>
+                            </div>
+                            <p class="stat-value" id="current-balance">₹0</p>
+                            <div class="stat-footer">Available Liquid</div>
+                        </div>
+
+                        <div class="stat-card savings-card">
+                            <div class="stat-header">
+                                <div class="stat-icon"><i class="fas fa-piggy-bank"></i></div>
+                                <h3>Total Savings</h3>
+                            </div>
+                            <p class="stat-value" id="total-savings">₹0</p>
+                            <div class="stat-footer">Across All Goals</div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Expense Distribution</h3></div>
+                            <div class="chart-container"><canvas id="expense-chart"></canvas></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Cash Flow</h3></div>
+                            <div class="chart-container"><canvas id="income-expense-chart"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <div class="section-header">
+                            <h3>Latest Activity</h3>
+                            <a href="#" class="view-all-link" data-section="transactions">View All History</a>
+                        </div>
+                        <div id="recent-transactions-list" class="transactions-list"></div>
+                    </div>
+                </section>
+
+                <!-- Transactions Section -->
+                <section id="transactions-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Transactions</h2>
+                        <p class="section-description">Full history of your financial activities</p>
+                    </div>
+                    <div class="form-container">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <select id="filter-category" class="form-input">
+                                    <option value="">All Categories</option>
+                                    <option value="Food">Food & Dining</option>
+                                    <option value="Rent">Rent & Housing</option>
+                                    <option value="Travel">Travel & Transport</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Job">Job/Salary</option>
+                                    <option value="Freelance">Freelance</option>
+                                    <option value="Investment">Investment</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Type</label>
+                                <select id="filter-type" class="form-input">
+                                    <option value="">All Types</option>
+                                    <option value="income">Income</option>
+                                    <option value="expense">Expense</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="all-transactions-list" class="transactions-list"></div>
+                    <!-- FIX: [Pagination for Transactions] -->
+                    <div id="load-more-container" class="load-more-container hidden">
+                        <button id="btn-load-more" class="btn btn-secondary btn-full">Load More</button>
+                    </div>
+                </section>
+
+                <!-- Income Section -->
+                <section id="income-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Add Income</h2>
+                        <p class="section-description">Record a new income source</p>
+                    </div>
+                    <div class="form-container">
+                        <form id="income-form" class="modern-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" class="form-input" id="income-description" placeholder="E.g., Salary, Dividend" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Amount (₹)</label>
+                                    <input type="number" class="form-input" id="income-amount" placeholder="0.00" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-input" id="income-category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Job">Job/Salary</option>
+                                        <option value="Freelance">Freelance</option>
+                                        <option value="Investment">Investment</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-input" id="income-date" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Submit Income Record</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Expenses Section -->
+                <section id="expenses-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Add Expense</h2>
+                        <p class="section-description">Record a new expenditure</p>
+                    </div>
+                    <div class="form-container">
+                        <form id="expense-form" class="modern-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" class="form-input" id="expense-description" placeholder="E.g., Groceries" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Amount (₹)</label>
+                                    <input type="number" class="form-input" id="expense-amount" placeholder="0.00" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-input" id="expense-category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Food">Food & Dining</option>
+                                        <option value="Rent">Rent & Housing</option>
+                                        <option value="Travel">Travel & Transport</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Utilities">Utilities</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-input" id="expense-date" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Submit Expense Record</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Budget Section -->
+                <section id="budget-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Budgets</h2>
+                        <p class="section-description">Control your category spending limits</p>
+                    </div>
+                    <div class="form-container">
+                        <form id="budget-form" class="modern-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-input" id="budget-category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Food">Food & Dining</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Travel">Travel & Transport</option>
+                                        <option value="Utilities">Utilities</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Monthly Limit (₹)</label>
+                                    <input type="number" class="form-input" id="budget-limit" placeholder="0.00" min="0" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Define Budget Limit</button>
+                        </form>
+                    </div>
+                    <div id="budget-progress-list" class="budget-list"></div>
+                </section>
+
+                <!-- Savings Goals Section -->
+                <section id="savings-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Savings Goals</h2>
+                        <p class="section-description">Track progress towards your dreams</p>
+                    </div>
+                    <div class="form-container">
+                        <form id="savings-form" class="modern-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Goal Title</label>
+                                    <input type="text" class="form-input" id="savings-title" placeholder="E.g., New Home" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Target Amount (₹)</label>
+                                    <input type="number" class="form-input" id="savings-target" placeholder="0.00" min="0" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Current Savings (₹)</label>
+                                    <input type="number" class="form-input" id="savings-current" placeholder="0.00" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Deadline</label>
+                                    <input type="date" class="form-input" id="savings-deadline" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Initiate Savings Goal</button>
+                        </form>
+                    </div>
+                    <div id="savings-goals-list" class="savings-list"></div>
+                </section>
+
+                <!-- Profile Section -->
+                <section id="profile-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Account</h2>
+                        <p class="section-description">Manage your identity and settings</p>
+                    </div>
+                    <div class="profile-grid">
+                        <div class="profile-card">
+                            <div class="profile-avatar-container">
+                                <img src="https://i.pravatar.cc/150?u=demo" alt="Profile" class="profile-avatar" id="profile-avatar">
+                            </div>
+                            <div class="profile-details" id="profile-details-view">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <p id="profile-name-display" style="font-weight: 700; font-size: 1.25rem;">Demo User</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <p id="profile-email-display">demo@budget.com</p>
+                                </div>
+                                <button class="btn btn-secondary btn-full" id="edit-profile-btn">Edit Account Details</button>
+                            </div>
+                            <div class="profile-edit-form" id="profile-edit-form" style="display: none;">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-input" id="edit-profile-name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Monthly Target</label>
+                                    <input type="number" class="form-input" id="edit-monthly-budget">
+                                </div>
+                                <div class="form-row">
+                                    <button class="btn btn-primary" id="save-profile-btn">Save</button>
+                                    <button class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-card">
+                            <h3>Financial Health</h3>
+                            <div class="budget-progress-section" style="margin-top: var(--spacing-lg);">
+                                <div class="progress-header">
+                                    <span>Monthly Utilization</span>
+                                    <span id="budget-utilization-percentage">0%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" id="budget-utilization-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="account-actions" style="margin-top: var(--spacing-xl); display: flex; flex-direction: column; gap: 10px;">
+                                <button class="btn btn-secondary btn-full" id="export-data-btn"><i class="fas fa-download"></i> Export Data (CSV)</button>
+                                <button class="btn btn-secondary btn-full" id="change-password-btn"><i class="fas fa-key"></i> Security Settings</button>
+                                <button class="btn btn-danger btn-full nav-item-logout" id="logout-btn" style="color: var(--color-danger); border: 1px solid var(--color-danger);"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI Forecast Section -->
+                <section id="ai-forecast-section" class="content-section">
+                    <div class="section-header">
+                        <div>
+                            <h2>AI Intelligence</h2>
+                            <p class="section-description">Predictive analytics for your wallet</p>
+                        </div>
+                        <button class="btn btn-primary" id="generateForecastBtn">Run Intelligence Analysis</button>
+                    </div>
+                    <div class="forecast-overview">
+                        <div class="forecast-card">
+                            <div class="stat-header">
+                                <div class="forecast-icon predicted"><i class="fas fa-brain"></i></div>
+                                <h3>Predicted Burn</h3>
+                            </div>
+                            <div class="forecast-value" id="nextMonthForecast">₹0.00</div>
+                            <div id="nextMonthTrend" class="stat-footer">Analyzing...</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="stat-header">
+                                <div class="forecast-icon"><i class="fas fa-history"></i></div>
+                                <h3>Current Avg</h3>
+                            </div>
+                            <div class="forecast-value" id="currentMonthAverage">₹0.00</div>
+                            <div class="stat-footer">Baseline Reference</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="stat-header">
+                                <div class="forecast-icon"><i class="fas fa-bullseye"></i></div>
+                                <h3>Confidence</h3>
+                            </div>
+                            <div class="forecast-value" id="modelAccuracy">0%</div>
+                            <div id="accuracyLabel" class="stat-footer">Neural Network State</div>
+                        </div>
+                    </div>
+                    <div class="ai-insights-panel">
+                        <div class="insights-header"><h3><i class="fas fa-bolt"></i> Intelligent Insights</h3></div>
+                        <div id="aiInsightsList" class="insights-list" style="margin-top: 20px;"></div>
+                    </div>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Trend Prediction</h3></div>
+                            <div class="chart-container"><canvas id="forecastTrendChart"></canvas></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Category Projection</h3></div>
+                            <div class="chart-container"><canvas id="categoryForecastChart"></canvas></div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

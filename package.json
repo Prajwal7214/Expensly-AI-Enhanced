@@ -1,0 +1,39 @@
+{
+  "name": "personal-budgeting-forecaster",
+  "description": "Expensly",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "keywords": [
+    "budget",
+    "finance",
+    "expense-tracker",
+    "javascript",
+    "html5",
+    "css3",
+    "chart.js"
+  ],
+  "author": "Expensly Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.0",
+    "nodemon": "^3.1.10",
+    "serve": "^14.2.0"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.4.1",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.3"
+  }
+}
