@@ -33,7 +33,8 @@ app.use(cookieParser());
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    if (origin.includes('localhost') || origin.endsWith('.vercel.app')) {
+    // Allow localhost, vercel, and render domains
+    if (origin.includes('localhost') || origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com')) {
       return callback(null, true);
     }
     callback(new Error('Not allowed by CORS'));
