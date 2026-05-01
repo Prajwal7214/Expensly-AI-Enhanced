@@ -31,7 +31,7 @@ app.use(cookieParser());
 
 // CORS Configuration
 app.use(cors({
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     if (origin.includes('localhost') || origin.endsWith('.vercel.app')) {
       return callback(null, true);
@@ -50,11 +50,11 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
-.then(() => console.log('✅ Connected to MongoDB'))
-.catch(err => {
-  console.error('❌ MongoDB connection error:', err);
-  process.exit(1); // FIX: [MongoDB URI Fallback] Exit on failure
-});
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1); // FIX: [MongoDB URI Fallback] Exit on failure
+  });
 
 // FIX: [Loading Spinner/Cold Starts] Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -74,7 +74,7 @@ app.use('/api/budgets', budgetRoutes);
 app.use('/api/savings', savingsRoutes);
 
 // FIX: [Static File Serving] Catch-all route to serve index.html for SPA behavior
-app.get('*', (req, res, next) => {
+app.get('/{*splat}', (req, res, next) => {
   if (req.url.startsWith('/api')) return next();
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
