@@ -1,378 +1,150 @@
-# Personal Budgeting and Expense Forecaster
+# Personal Budgeting and Expense Forecaster (Expensly AI-Enhanced)
+
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-green.svg)
+![Status: Deployed](https://img.shields.io/badge/Status-Deployed-success.svg)
 
 ## 📊 Overview
 
-**Personal Budgeting and Expense Forecaster** is an intelligent budget management and financial forecasting platform that helps you track expenses, set budgets, and predict your financial future.
+**Personal Budgeting and Expense Forecaster** is an intelligent, full-stack budget management and financial forecasting platform. It helps you track expenses, set budgets, and predict your financial future using a modern web interface and a robust backend.
 
-### Key Features
-- ✅ **Dashboard** - Financial overview with income, expenses, balance, and savings
-- ✅ **Profile Section** - Manage account details and view financial summary
-- ✅ **Income & Expense Tracking** - Record all your financial transactions
-- ✅ **Budget Management** - Set category-wise spending limits
-- ✅ **Savings Goals** - Track progress toward financial targets
-- ✅ **Data Visualization** - Interactive charts and graphs
-- ✅ **Dark/Light Theme** - Toggle between themes
-- ✅ **Offline Mode** - Works with local storage when API is unavailable
+### 🌟 Live Demo
+**Access the deployed application here:** [https://expensly-ai-enhanced.onrender.com](https://expensly-ai-enhanced.onrender.com)
 
 ---
 
-## 🚀 Quick Start
+## ✨ Key Features
 
-### Option 1: Direct Browser
-1. Navigate to `frontend/` folder
-2. Open `index.html` in your browser
-3. Use demo credentials:
-   - Email: demo@budget.com
-   - Password: demo123
+- 🔐 **Secure Authentication** - JWT-based login and registration with strong password validation and bcrypt hashing.
+- 📈 **Dashboard** - Comprehensive financial overview displaying income, expenses, balance, and savings.
+- 👤 **Profile Management** - Manage account details, update monthly budget targets, and view personalized financial summaries.
+- 💸 **Income & Expense Tracking** - Record, categorize, and track all your financial transactions.
+- 🎯 **Budget Management** - Set category-wise spending limits with visual utilization progress.
+- 🏦 **Savings Goals** - Create and track progress toward specific financial targets.
+- 📊 **Data Visualization** - Interactive charts and graphs powered by Chart.js.
+- 🌗 **Dark/Light Theme** - Seamless toggle between themes for a comfortable viewing experience.
 
-### Option 2: VS Code Live Server
-1. Open project in VS Code
-2. Install "Live Server" extension
-3. Right-click `frontend/index.html`
-4. Select "Open with Live Server"
+---
 
-### Option 3: Local Server
-```bash
-cd frontend
-python -m http.server 8000
-# Open http://localhost:8000
-```
+## 🛠️ Technology Stack
+
+This application is built using a custom **MERN-like Stack** (MongoDB, Express, Vanilla JS, Node.js):
+
+- **Frontend:** Vanilla JavaScript (ES6+), HTML5, CSS3, Font Awesome (Icons), Chart.js
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB (with Mongoose ODM)
+- **Authentication:** JSON Web Tokens (JWT), bcryptjs
+- **Deployment:** Render (Hosting)
 
 ---
 
 ## 📁 Project Structure
 
-```
-Personal-Budgeting-Forecaster/
+```text
+BudgetWise-AI-Enhanced/
 │
-├── frontend/
-│   ├── index.html          # Main HTML (renamed from Expensly)
-│   ├── style.css           # Complete CSS with profile styles
-│   └── app.js              # JavaScript with profile functionality
+├── frontend/                 # Client-side files
+│   ├── index.html            # Main SPA HTML
+│   ├── style.css             # UI Styles and Theming
+│   └── app.js                # Frontend Application Logic
 │
-├── backend/
-│   ├── server.js           # Express server
-│   ├── models/             # MongoDB models
-│   └── routes/             # API routes
+├── backend/                  # Server-side logic
+│   ├── server.js             # Express application entry point
+│   ├── middleware/           # Custom middleware (Auth, Error Handling)
+│   ├── models/               # Mongoose schemas (User, Transaction, Budget, SavingsGoal)
+│   └── routes/               # API endpoints
 │
-├── README.md               # This file
-└── package.json            # Dependencies
+├── package.json              # Project dependencies & scripts
+├── .env.example              # Example environment variables
+└── README.md                 # Project documentation
 ```
 
 ---
 
-## 🎨 New Profile Section
+## 🚀 Local Setup & Installation
 
-### Features Included:
+To run this project locally on your machine, follow these steps:
 
-#### 1. Personal Information Card
-- Display name, email, and join date
-- Profile photo with upload capability
-- Edit profile functionality
-- Update monthly budget target
+### 1. Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [MongoDB](https://www.mongodb.com/) (Local instance or MongoDB Atlas cluster)
 
-#### 2. Financial Summary Card
-- Real-time income total
-- Real-time expense total
-- Remaining balance calculation
-- Monthly budget display
-- Budget utilization progress bar with color-coded warnings
+### 2. Clone and Install
+```bash
+# Clone the repository (if applicable)
+git clone <repository-url>
+cd BudgetWise-AI-Enhanced
 
-#### 3. Quick Actions Card
-- One-click navigation to:
-  - Add Income
-  - Add Expense
-  - Set Budget
-  - Create Savings Goal
-
-#### 4. Account Actions Card
-- Export all data as JSON
-- Change password (coming soon)
-- Logout functionality
-
----
-
-## 🔄 What Was Changed
-
-### Files Modified:
-
-#### 1. **index.html** (Renamed from Expensly)
-- **Changed:** All "Expensly" references to "Personal Budgeting and Expense Forecaster"
-- **Changed:** Logo icon from wallet to chart-line
-- **Changed:** Hero title and subtitle
-- **Changed:** Demo email from demo@expensly.com to demo@budget.com
-- **Added:** Profile section with complete UI
-- **Added:** User avatar in header
-- **Added:** Logout button in sidebar
-- **Added:** Profile navigation item
-
-#### 2. **style.css** (Enhanced)
-- **Kept:** All original modern n8n-inspired design
-- **Kept:** Dark/orange and light themes
-- **Added:** 500+ lines of profile-specific styles:
-  - Profile grid layout
-  - Profile cards
-  - Avatar upload section
-  - Financial summary styles
-  - Quick actions grid
-  - Account actions list
-  - Budget utilization progress bar
-  - Responsive design for mobile
-
-#### 3. **app.js** (Enhanced)
-- **Changed:** All localStorage keys from 'expensly_' to 'budget_'
-- **Changed:** API references and variable names
-- **Added:** Profile data management functions
-- **Added:** Profile display and update functions
-- **Added:** Avatar upload functionality
-- **Added:** Budget utilization calculations
-- **Added:** Data export functionality
-- **Added:** Profile event listeners
-- **Modified:** `showMainApp()` to initialize profile
-- **Modified:** `updateDashboard()` to sync with profile
-
-### Files Created:
-- None (all existing files were enhanced)
-
----
-
-## 💾 Data Structure
-
-### User Profile Object
-```javascript
-{
-  name: "John Doe",
-  email: "john@example.com",
-  avatar: "base64_or_url",
-  monthlyBudget: 50000,
-  joinedDate: "2024-01-15T00:00:00.000Z"
-}
+# Install dependencies
+npm install
 ```
 
-### Storage Keys
-- `budget_token` - Authentication token
-- `budget_current_user` - Current user data
-- `budget_user_profile` - Extended profile data
-- `budget_users` - All users (offline mode)
-- `budget_transactions` - Transaction history
-- `budget_budgets` - Budget limits
-- `budget_savings` - Savings goals
-- `budget_dark_mode` - Theme preference
-- `budget_monthly_target` - Monthly budget target
+### 3. Environment Variables
+Create a `.env` file in the root directory and add the following configurations:
+```env
+# Server Configuration
+PORT=5000
 
----
+# Database Configuration
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
 
-## 🔗 Profile-Data Integration
-
-### How Profile Connects with Existing Features:
-
-#### 1. **Income/Expense Sync**
-- Profile financial summary updates in real-time when:
-  - New income is added
-  - New expense is recorded
-  - Transaction is deleted
-- Uses same `transactions` array as dashboard
-
-#### 2. **Budget Integration**
-- Monthly budget set in profile affects:
-  - Budget utilization progress bar
-  - Warning colors (yellow >70%, red >90%)
-  - Dashboard calculations
-- Stored in: `userProfile.monthlyBudget` and `budget_monthly_target`
-
-#### 3. **User Data Sync**
-- Profile name updates reflect in:
-  - Header user name
-  - Avatar initials (if no photo)
-  - Local storage `budget_current_user`
-- Profile changes persist across sessions
-
-#### 4. **Quick Actions**
-- Buttons navigate to existing sections:
-  - `showSection('income')`
-  - `showSection('expenses')`
-  - `showSection('budget')`
-  - `showSection('savings')`
-- Maintains context and data consistency
-
----
-
-## 🎯 Key Functions Added
-
-### Profile Management:
-```javascript
-loadUserProfile()              // Load profile from storage
-saveUserProfile()              // Save profile to storage
-updateProfileDisplay()         // Update UI with profile data
-updateProfileFinancialSummary() // Calculate and display financials
-updateBudgetUtilization()      // Update progress bar
+# JWT Authentication
+JWT_SECRET=your_super_secret_jwt_key_here
 ```
+*(You can refer to `.env.example` for the template).*
 
-### Profile Actions:
-```javascript
-toggleProfileEdit()            // Switch between view/edit mode
-saveProfileChanges()           // Save edited profile
-handleAvatarUpload()           // Process profile photo
-exportUserData()               // Export all data as JSON
-changePassword()               // Password change (placeholder)
+### 4. Run the Application
+```bash
+# Start in development mode (using nodemon)
+npm run dev
+
+# OR start in production mode
+npm start
 ```
-
-### Event Handlers:
-```javascript
-setupProfileEventListeners()   // Attach all profile events
-```
+The application will be accessible at: `http://localhost:5000`
 
 ---
 
-## 📱 Responsive Design
+## 🌐 API Endpoints
 
-### Desktop (1024px+)
-- 2-column profile grid
-- Full sidebar visible
-- Large stat cards
+The backend exposes a RESTful API. Below are the core route categories:
 
-### Tablet (768px-1023px)
-- 1-column profile grid
-- Collapsible sidebar
-- Medium stat cards
+- **Authentication:** `/api/auth/register`, `/api/auth/login`, `/api/auth/me`
+- **Transactions:** `/api/transactions` (GET, POST, DELETE)
+- **Budgets:** `/api/budgets` (GET, POST, PUT, DELETE)
+- **Savings:** `/api/savings` (GET, POST, PUT, DELETE)
 
-### Mobile (<768px)
-- Single column layout
-- Hamburger menu
-- Stacked quick actions
-- Smaller avatars
+*Note: All endpoints (except login/register) require a valid JWT token passed in the `Authorization: Bearer <token>` header.*
 
 ---
 
-## 🎨 Theme Support
+## 🚢 Deployment Details
 
-Both dark and light themes fully support the profile section:
+The project is configured for cloud deployment and is currently hosted on **Render**.
 
-### Dark Theme
-- Background: #1A1A1A
-- Surface: #242424
-- Cards: Elevated with shadows
-- Text: #E5E7EB
-- Accents: Orange (#FF6D5A)
+### Deployment Architecture
+- **Single Node Service:** The Express backend serves the API routes under `/api/*` and acts as a static file server for the `frontend/` directory.
+- **SPA Fallback:** All non-API requests are routed to `index.html` to support frontend routing (Single Page Application behavior).
+- **CORS Configured:** Secure CORS rules are set up to allow traffic from designated origins.
+- **Database:** Hosted securely on MongoDB Atlas.
 
-### Light Theme
-- Background: #FAFAFA
-- Surface: #FFFFFF
-- Cards: Clean with borders
-- Text: #1F2937
-- Accents: Orange (#FF6D5A)
-
----
-
-## ⚙️ Technical Details
-
-### Dependencies
-No new dependencies added. Uses existing:
-- Font Awesome 6.5.1 (icons)
-- Chart.js (graphs)
-- Vanilla JavaScript
-- CSS Grid & Flexbox
-
-### Browser Support
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-### File Sizes
-- index.html: ~26KB (+8KB for profile)
-- style.css: ~32KB (+12KB for profile)
-- app.js: ~38KB (+6KB for profile)
+### How to deploy your own instance on Render:
+1. Push this repository to GitHub.
+2. Log into [Render](https://render.com/) and create a new **Web Service**.
+3. Connect your GitHub repository.
+4. Set the following settings:
+   - **Environment:** `Node`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. Add your Environment Variables (`MONGODB_URI`, `JWT_SECRET`) in the Render dashboard.
+6. Click **Deploy**.
 
 ---
 
-## 🔒 Data Privacy
-
-- All data stored locally in browser
-- Profile photos converted to base64
-- No external tracking
-- Export data anytime
-- Clear data by logging out
-
----
-
-## 🚦 Feature Status
-
-### ✅ Completed
-- Profile display
-- Profile editing
-- Avatar upload
-- Financial summary
-- Budget utilization
-- Quick actions
-- Data export
-- Theme integration
-- Responsive design
-
-### 🔄 Coming Soon
-- Password change
-- Email notifications
-- Two-factor authentication
-- Cloud sync
-- Multi-currency support
-
----
-
-## 🐛 Troubleshooting
-
-### Profile Not Loading
-1. Clear browser cache
-2. Check localStorage permissions
-3. Ensure JavaScript is enabled
-
-### Avatar Not Uploading
-1. Check file size (<2MB)
-2. Verify image format (PNG, JPG, GIF)
-3. Try different browser
-
-### Budget Not Updating
-1. Refresh the page
-2. Check console for errors
-3. Re-enter budget amount
-
----
-
-## 📞 Support
-
-For issues or questions:
-1. Check browser console (F12)
-2. Verify all files are present
-3. Ensure Font Awesome CDN is accessible
-
----
-
-## 🎉 Credits
-
-**Original Project:** Expensly - Smart Budget Tracker  
-**Renamed To:** Personal Budgeting and Expense Forecaster  
-**Profile Section:** Added in 2024  
-**Design:** Modern, n8n-inspired UI  
-**Icons:** Font Awesome 6.5.1  
-
----
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome!
 
 ## 📄 License
+This project is licensed under the [MIT License](LICENSE).
 
-MIT License - Free to use and modify
 
----
-
-## 🚀 Future Enhancements
-
-- AI-powered expense forecasting
-- Receipt scanning with OCR
-- Bank account integration
-- Expense categories customization
-- Recurring transactions
-- Bill reminders
-- Financial reports (PDF)
-- Mobile app version
-
----
-
-**Enjoy managing your finances with Personal Budgeting and Expense Forecaster!** 💰📊
