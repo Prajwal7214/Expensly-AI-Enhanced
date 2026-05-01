@@ -31,14 +31,7 @@ app.use(cookieParser());
 
 // CORS Configuration
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    // Allow localhost, vercel, and render domains
-    if (origin.includes('localhost') || origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com')) {
-      return callback(null, true);
-    }
-    callback(new Error('Not allowed by CORS'));
-  },
+  origin: true, // FIX: [CORS] Allow any origin to prevent Render deployment issues
   credentials: true // FIX: [Token Storage] Allow cookies to be sent
 }));
 
