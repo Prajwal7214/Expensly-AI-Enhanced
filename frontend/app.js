@@ -911,20 +911,36 @@ function loadUserProfile() {
 }
 
 function updateProfileDisplay() {
-    document.getElementById('user-name').textContent = userProfile.name;
-    document.getElementById('profile-name-display').textContent = userProfile.name;
-    document.getElementById('profile-email-display').textContent = userProfile.email;
-    document.getElementById('profile-avatar').src = userProfile.avatar;
-    document.getElementById('profile-monthly-budget').textContent = `₹${userProfile.monthlyBudget.toFixed(2)}`;
+    const userNameEl = document.getElementById('user-name');
+    if (userNameEl) userNameEl.textContent = userProfile.name;
+    
+    const profileNameDisplay = document.getElementById('profile-name-display');
+    if (profileNameDisplay) profileNameDisplay.textContent = userProfile.name;
+    
+    const profileEmailDisplay = document.getElementById('profile-email-display');
+    if (profileEmailDisplay) profileEmailDisplay.textContent = userProfile.email;
+    
+    const profileAvatar = document.getElementById('profile-avatar');
+    if (profileAvatar) profileAvatar.src = userProfile.avatar;
+    
+    const profileMonthlyBudget = document.getElementById('profile-monthly-budget');
+    if (profileMonthlyBudget) profileMonthlyBudget.textContent = `₹${userProfile.monthlyBudget.toFixed(2)}`;
+    
     updateProfileFinancialSummary();
 }
 
 function updateProfileFinancialSummary() {
     const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
     const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-    document.getElementById('profile-total-income').textContent = `₹${totalIncome.toFixed(2)}`;
-    document.getElementById('profile-total-expenses').textContent = `₹${totalExpenses.toFixed(2)}`;
-    document.getElementById('profile-remaining-balance').textContent = `₹${(totalIncome - totalExpenses).toFixed(2)}`;
+    
+    const profileTotalIncome = document.getElementById('profile-total-income');
+    if (profileTotalIncome) profileTotalIncome.textContent = `₹${totalIncome.toFixed(2)}`;
+    
+    const profileTotalExpenses = document.getElementById('profile-total-expenses');
+    if (profileTotalExpenses) profileTotalExpenses.textContent = `₹${totalExpenses.toFixed(2)}`;
+    
+    const profileRemainingBalance = document.getElementById('profile-remaining-balance');
+    if (profileRemainingBalance) profileRemainingBalance.textContent = `₹${(totalIncome - totalExpenses).toFixed(2)}`;
 }
 
 // Profile UI Helpers
