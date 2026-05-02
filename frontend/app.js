@@ -923,6 +923,9 @@ function updateProfileDisplay() {
     const profileAvatar = document.getElementById('profile-avatar');
     if (profileAvatar) profileAvatar.src = userProfile.avatar;
 
+    const userAvatarSmall = document.getElementById('user-avatar-small');
+    if (userAvatarSmall) userAvatarSmall.src = userProfile.avatar;
+
     const profileMonthlyBudget = document.getElementById('profile-monthly-budget');
     if (profileMonthlyBudget) profileMonthlyBudget.textContent = `₹${(userProfile.monthlyBudget || 0).toFixed(2)}`;
 
