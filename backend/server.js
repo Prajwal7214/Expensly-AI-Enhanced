@@ -38,7 +38,13 @@ app.use(cors({
 app.use(express.json());
 
 // FIX: [Static File Serving] Serve frontend files in production
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../frontend'), {
+  setHeaders: (res, path) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
+}));
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -70,6 +76,9 @@ app.use('/api/savings', savingsRoutes);
 // FIX: [Static File Serving] Catch-all route to serve index.html for SPA behavior
 app.get('/{*splat}', (req, res, next) => {
   if (req.url.startsWith('/api')) return next();
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
