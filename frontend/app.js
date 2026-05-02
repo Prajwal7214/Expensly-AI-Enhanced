@@ -78,13 +78,13 @@ async function apiCall(endpoint, options = {}) {
 }
 
 // Initialize Application
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     // FIX: [Loading Spinner for Cold Starts]
     const loader = document.getElementById('initial-loader');
-    
+
     // Check if backend is alive (important for Render free tier cold starts)
     const isAlive = await checkBackendHealth();
-    
+
     if (!isAlive) {
         // Retry once after a delay if first check fails
         await new Promise(resolve => setTimeout(resolve, 3000));
@@ -145,7 +145,7 @@ function setupEventListeners() {
 
     // Password validation for signup
     document.getElementById('signupPassword')?.addEventListener('input', validatePasswordRealtime);
-    
+
     // Password toggle functionality
     document.getElementById('loginPasswordToggle')?.addEventListener('click', () => togglePasswordVisibility('loginPassword', 'loginPasswordToggle'));
     document.getElementById('signupPasswordToggle')?.addEventListener('click', () => togglePasswordVisibility('signupPassword', 'signupPasswordToggle'));
@@ -590,12 +590,12 @@ async function displayAllTransactions(isInitial = true) {
 
     const categoryFilter = document.getElementById('filter-category')?.value || '';
     const typeFilter = document.getElementById('filter-type')?.value || '';
-    
+
     let endpoint = `/transactions?page=${transactionPagination.currentPage}&limit=${transactionPagination.limit}`;
     // Future expansion: Backend filtering
     // For now, filtering is done client-side based on the current full list for simplicity
     // But pagination is implemented on the backend.
-    
+
     try {
         const response = await apiCall(endpoint);
         const fetchedTransactions = response.data;
@@ -913,35 +913,37 @@ function loadUserProfile() {
 function updateProfileDisplay() {
     const userNameEl = document.getElementById('user-name');
     if (userNameEl) userNameEl.textContent = userProfile.name;
-    
+
     const profileNameDisplay = document.getElementById('profile-name-display');
     if (profileNameDisplay) profileNameDisplay.textContent = userProfile.name;
-    
+
     const profileEmailDisplay = document.getElementById('profile-email-display');
     if (profileEmailDisplay) profileEmailDisplay.textContent = userProfile.email;
-    
+
     const profileAvatar = document.getElementById('profile-avatar');
     if (profileAvatar) profileAvatar.src = userProfile.avatar;
-    
+
     const profileMonthlyBudget = document.getElementById('profile-monthly-budget');
-    if (profileMonthlyBudget) profileMonthlyBudget.textContent = `₹${userProfile.monthlyBudget.toFixed(2)}`;
-    
+    if (profileMonthlyBudget) profileMonthlyBudget.textContent = `₹${(userProfile.monthlyBudget || 0).toFixed(2)}`;
+
     updateProfileFinancialSummary();
 }
 
 function updateProfileFinancialSummary() {
+    if (!transactions) return;  // ADD THIS LINE
     const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
     const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-    
+
     const profileTotalIncome = document.getElementById('profile-total-income');
     if (profileTotalIncome) profileTotalIncome.textContent = `₹${totalIncome.toFixed(2)}`;
-    
+
     const profileTotalExpenses = document.getElementById('profile-total-expenses');
     if (profileTotalExpenses) profileTotalExpenses.textContent = `₹${totalExpenses.toFixed(2)}`;
-    
+
     const profileRemainingBalance = document.getElementById('profile-remaining-balance');
     if (profileRemainingBalance) profileRemainingBalance.textContent = `₹${(totalIncome - totalExpenses).toFixed(2)}`;
 }
+
 
 // Profile UI Helpers
 function toggleProfileEdit() {
@@ -977,13 +979,13 @@ async function generateForecast() {
     const btn = document.getElementById('generateForecastBtn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-    
+
     await new Promise(r => setTimeout(r, 1500)); // Simulate AI heavy work
-    
+
     const monthlyExpenses = last6MonthsData();
-    forecastData.nextMonthPrediction = monthlyExpenses.reduce((a,b)=>a+b,0) / (monthlyExpenses.length || 1) * 1.05;
+    forecastData.nextMonthPrediction = monthlyExpenses.reduce((a, b) => a + b, 0) / (monthlyExpenses.length || 1) * 1.05;
     forecastData.insights = generateAIInsights();
-    
+
     updateForecastUI();
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Generate AI Forecast';
@@ -991,9 +993,9 @@ async function generateForecast() {
 
 function last6MonthsData() {
     const now = new Date();
-    return [0,1,2,3,4,5].map(i => {
+    return [0, 1, 2, 3, 4, 5].map(i => {
         const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-        return transactions.filter(t => t.type === 'expense' && new Date(t.date).getMonth() === d.getMonth()).reduce((s,t)=>s+t.amount,0);
+        return transactions.filter(t => t.type === 'expense' && new Date(t.date).getMonth() === d.getMonth()).reduce((s, t) => s + t.amount, 0);
     });
 }
 
